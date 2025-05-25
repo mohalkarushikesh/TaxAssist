@@ -81,3 +81,9 @@ For support inquiries, contact:
 ## License
 
 Copyright © 2024 Cotality.com. All rights reserved.
+
+## Application Screenshot
+
+Below is a screenshot of the TaxAssist chatbot interface:
+
+![TaxAssist UI Screenshot](static/images/ui-screenshot.png)

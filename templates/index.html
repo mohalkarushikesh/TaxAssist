@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxAssist - Cotality Property Tax Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-50 h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Cotality Logo" class="h-8">
+                <h1 class="ml-4 text-xl font-semibold text-gray-800">TaxAssist</h1>
+            </div>
+            <button id="clearChat" class="text-gray-600 hover:text-gray-800">
+                <i class="fas fa-trash-alt mr-2"></i>Clear Chat
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Chat Area -->
+    <main class="flex-1 container mx-auto px-4 py-6 overflow-hidden flex flex-col">
+        <div id="chatMessages" class="flex-1 overflow-y-auto mb-4 space-y-4">
+            <!-- Welcome Message -->
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-3 bg-white rounded-lg p-4 shadow-sm max-w-3xl">
+                    <p class="text-gray-800">
+                        Hello! I'm TaxAssist, your property tax expert from Cotality. How can I help you today?
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="bg-white rounded-lg shadow-sm p-4">
+            <div class="flex items-center">
+                <textarea id="userInput" rows="1" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Type your message here..."></textarea>
+                <button id="sendMessage" class="ml-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Send
+                </button>
+                <button id="escalateToHuman" class="ml-4 text-gray-600 hover:text-gray-800" title="Talk to a human">
+                    <i class="fas fa-headset text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html> 

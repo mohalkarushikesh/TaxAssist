@@ -1,37 +1,40 @@
-# TaxAssist
+# TaxAssist - Cotality Property Tax Chatbot
 
-A modern AI-powered tax assistant chatbot built with Flask and Google's Gemini API.
+TaxAssist is an intelligent chatbot designed to handle property-related tax queries for Cotality.com. It uses the Gemini API to provide accurate, timely, and user-friendly responses about property taxes, calculations, regulations, and guidance.
 
 ## Features
 
-- Interactive chat interface for tax-related queries
-- Real-time responses using Google's Gemini AI
-- Clean, modern UI with typing indicators and animations
-- Mobile-responsive design
+- Real-time property tax assistance
+- Natural language understanding
+- Tax calculation estimates
+- Regulatory guidance
+- Filing assistance
+- Deadline reminders
+- Escalation to human support
+- Mobile-responsive interface
+- Accessibility-compliant design
 
-## Tech Stack
+## Technical Stack
 
-- Python 3.8+
-- Flask
-- Google Gemini API
-- HTML5/CSS3
-- JavaScript
+- Backend: Python Flask
+- Frontend: HTML5, CSS3, JavaScript
+- AI: Google's Gemini API
+- Styling: Tailwind CSS
+- Icons: Font Awesome
+- Typography: Inter font family
 
 ## Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/mohalkarushikesh/TaxAssist.git
-cd TaxAssist
+git clone [repository-url]
+cd taxassist
 ```
 
-2. Create and activate virtual environment:
+2. Create and activate a virtual environment:
 ```bash
 python -m venv venv
-# Windows
-.\venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -40,40 +43,41 @@ pip install -r requirements.txt
 ```
 
 4. Set up environment variables:
-```bash
-# Windows
-set GOOGLE_API_KEY=your_api_key
-# Linux/Mac
-export GOOGLE_API_KEY=your_api_key
+Create a `.env` file in the root directory with:
+```
+GEMINI_API_KEY=AIzaSyCDGdoZrW4V10rnTCCGRu6vWNs-AddIsfY
+FLASK_ENV=development
+DEBUG=True
 ```
 
 5. Run the application:
 ```bash
-python -m src.taxassist.app
+python src/app.py
 ```
 
 The application will be available at `http://localhost:5000`
 
-## Project Structure
+## Usage
 
-```
-taxassist/
-├── config/
-│   └── config.yaml       # Configuration settings
-├── src/
-│   └── taxassist/
-│       ├── app.py        # Main application
-│       └── utils/
-│           ├── logger.py # Logging setup
-│           └── tax_processor.py # Tax processing logic
-├── logs/                 # Application logs
-└── requirements.txt      # Dependencies
-```
+1. Open the application in a web browser
+2. Type your property tax-related question in the chat input
+3. Receive instant responses from TaxAssist
+4. Use the "Clear Chat" button to start a new conversation
+5. Click the headset icon to escalate to human support if needed
 
-## Contributing
+## Development
 
-Feel free to open issues and pull requests for any improvements.
+- The main application logic is in `src/app.py`
+- Frontend templates are in the `templates` directory
+- Static assets (CSS, JS, images) are in the `static` directory
+- Styling customizations can be made in `static/css/style.css`
+
+## Support
+
+For support inquiries, contact:
+- Email: supportUK@cotality.com
+- Phone (UK): 0333 123 1417
 
 ## License
 
-MIT License
+Copyright © 2024 Cotality.com. All rights reserved.

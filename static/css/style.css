@@ -41,11 +41,15 @@ header p {
     opacity: 0.8;
 }
 
+/* Transparent, glassmorphism theme for chatbot */
+
 .chat-container {
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .chat-box {
@@ -62,32 +66,30 @@ header p {
 }
 
 .chat-message.user {
-    background-color: var(--primary-color);
-    color: white;
-    margin-left: auto;
+    background: rgba(37, 99, 235, 0.7) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
 }
 
 .chat-message.ai {
-    background-color: #f1f5f9;
-    margin-right: auto;
+    background: rgba(255, 255, 255, 0.6) !important;
+    color: #1e293b !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .input-container {
-    display: flex;
-    padding: 1rem;
-    border-top: 1px solid var(--border-color);
-    background-color: white;
+    background: rgba(255,255,255,0.4) !important;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 #user-input {
-    flex: 1;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    margin-right: 1rem;
-    font-family: inherit;
-    resize: none;
-    outline: none;
+    background: rgba(255,255,255,0.7) !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+    color: #222 !important;
 }
 
 #send-btn {

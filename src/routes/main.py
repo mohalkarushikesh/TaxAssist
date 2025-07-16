@@ -1,6 +1,6 @@
 import re
 import markdown2
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify
 from datetime import datetime
 import os
 import google.generativeai as genai
@@ -36,13 +36,7 @@ def starts_with_greeting(text):
     text = text.strip().lower()
     return any(re.match(greet, text) for greet in greetings)
 
-@main_bp.route("/")
-def home():
-    """Serve the chatbot interface"""
-    try:
-        return render_template('index.html')
-    except Exception as e:
-        return jsonify({"error": "Template not found. Please ensure 'templates/index.html' exists.", "details": str(e)}), 500
+# Removed the '/' route that rendered index.html
 
 @main_bp.route("/api/chat", methods=["POST"])
 def chat():

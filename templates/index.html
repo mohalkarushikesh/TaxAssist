@@ -8,8 +8,113 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <style>
+        body, html {
+            font-family: 'Monaco', 'Consolas', 'Liberation Mono', 'Menlo', 'Courier', monospace !important;
+        }
+        body.custom-bg {
+            background: linear-gradient(120deg, #e0e7ff 0%, #f0f7ff 100%) fixed, url('/static/images/ui-screenshot.png') no-repeat center center fixed;
+            background-size: cover, cover;
+        }
+        body.dark-mode {
+            background: linear-gradient(120deg, #232946 0%, #121629 100%) fixed, url('/static/images/ui-screenshot.png') no-repeat center center fixed;
+            background-size: cover, cover;
+        }
+        .dark-mode .chat-container,
+        .dark-mode .input-container {
+            background: rgba(30, 41, 59, 0.45) !important;
+            color: #f1f5f9 !important;
+        }
+        .dark-mode .chat-message.ai {
+            background: rgba(30, 41, 59, 0.7) !important;
+            color: #f1f5f9 !important;
+        }
+        .dark-mode .chat-message.user {
+            background: rgba(37, 99, 235, 0.8) !important;
+            color: #fff !important;
+        }
+        .dark-mode #user-input {
+            background: rgba(30,41,59,0.7) !important;
+            color: #f1f5f9 !important;
+        }
+        .dark-mode .bg-white {
+            background: rgba(30,41,59,0.7) !important;
+            color: #f1f5f9 !important;
+        }
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 20%, #a5b4fc 0%, transparent 70%),
+                        radial-gradient(circle at 80% 80%, #f0abfc 0%, transparent 70%),
+                        radial-gradient(circle at 50% 50%, #f9fafb 0%, transparent 80%);
+            animation: bgMove 20s linear infinite alternate;
+        }
+        @keyframes bgMove {
+            0% { background-position: 20% 20%, 80% 80%, 50% 50%; }
+            100% { background-position: 80% 80%, 20% 20%, 60% 60%; }
+        }
+        .fade-in {
+            animation: fadeInMsg 0.7s;
+        }
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .sticky-input {
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+        @media (max-width: 640px) {
+            .input-container { position: sticky; bottom: 0; z-index: 10; }
+        }
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .quick-reply-btn {
+            background: rgba(37,99,235,0.12);
+            color: #2563eb;
+            border: none;
+            border-radius: 9999px;
+            padding: 0.4rem 1.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .quick-reply-btn:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        .font-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+        .font-size-btn {
+            background: rgba(37,99,235,0.12);
+            color: #2563eb;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .font-size-btn:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 h-screen flex flex-col">
+<body class="bg-gray-50 h-screen flex flex-col custom-bg" aria-label="TaxAssist Chatbot" role="main">
+    <div class="animated-bg"></div>
     <!-- Header -->
     <header class="bg-white shadow-sm">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -17,38 +122,46 @@
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Cotality Logo" class="h-8">
                 <h1 class="ml-4 text-xl font-semibold text-gray-800">TaxAssist</h1>
             </div>
-            <button id="clearChat" class="text-gray-600 hover:text-gray-800">
-                <i class="fas fa-trash-alt mr-2"></i>Clear Chat
-            </button>
+            <div class="flex items-center space-x-4">
+                <div class="font-size-controls" aria-label="Font size controls">
+                    <button id="decreaseFont" class="font-size-btn" title="Decrease font size" aria-label="Decrease font size">A-</button>
+                    <button id="increaseFont" class="font-size-btn" title="Increase font size" aria-label="Increase font size">A+</button>
+                </div>
+                <button id="toggleDarkMode" class="text-gray-600 hover:text-gray-800" title="Toggle dark mode" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="clearChat" class="text-gray-600 hover:text-gray-800" aria-label="Clear chat">
+                    <i class="fas fa-trash-alt mr-2"></i>Clear Chat
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Main Chat Area -->
-    <main class="flex-1 container mx-auto px-4 py-6 overflow-hidden flex flex-col">
-        <div id="chatMessages" class="flex-1 overflow-y-auto mb-4 space-y-4">
-            <!-- Welcome Message -->
-            <div class="flex items-start">
-                <div class="flex-shrink-0">
-                    <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                        <i class="fas fa-robot text-white"></i>
-                    </div>
-                </div>
-                <div class="ml-3 bg-white rounded-lg p-4 shadow-sm max-w-3xl">
-                    <p class="text-gray-800">
-                        Hello! I'm TaxAssist, your property tax expert from Cotality. How can I help you today?
-                    </p>
-                </div>
-            </div>
+    <main class="flex-1 container mx-auto px-4 py-6 overflow-hidden flex flex-col" aria-live="polite">
+        <div class="quick-replies" id="quickReplies">
+            <button class="quick-reply-btn" aria-label="What are your capabilities?">What are your capabilities?</button>
+            <button class="quick-reply-btn" aria-label="How do I calculate property tax?">How do I calculate property tax?</button>
+            <button class="quick-reply-btn" aria-label="What documents do I need for property tax filing?">What documents do I need for property tax filing?</button>
+            <button class="quick-reply-btn" aria-label="Can you help with tax deadlines?">Can you help with tax deadlines?</button>
+        </div>
+        <div id="chatMessages" class="flex-1 overflow-y-auto mb-4 space-y-4" aria-label="Chat messages">
+            <!-- Chat messages will be rendered here by JS -->
         </div>
 
         <!-- Input Area -->
-        <div class="bg-white rounded-lg shadow-sm p-4">
+        <div class="bg-white rounded-lg shadow-sm p-4 input-container sticky-input" aria-label="Message input area">
             <div class="flex items-center">
-                <textarea id="userInput" rows="1" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Type your message here..."></textarea>
-                <button id="sendMessage" class="ml-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <!-- Removed TaxAssist avatar image -->
+                <textarea id="userInput" rows="1" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Type your message here..." aria-label="Type your message here"></textarea>
+                <input type="file" id="fileUpload" class="ml-4" aria-label="Upload a file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt,.csv,.xls,.xlsx" style="display:none;">
+                <button id="uploadFileBtn" class="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" aria-label="Upload file">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <button id="sendMessage" class="ml-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" aria-label="Send message">
                     Send
                 </button>
-                <button id="escalateToHuman" class="ml-4 text-gray-600 hover:text-gray-800" title="Talk to a human">
+                <button id="escalateToHuman" class="ml-4 text-gray-600 hover:text-gray-800" title="Talk to a human" aria-label="Talk to a human">
                     <i class="fas fa-headset text-xl"></i>
                 </button>
             </div>
@@ -56,5 +169,47 @@
     </main>
 
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script>
+        // Dark mode toggle
+        const toggleBtn = document.getElementById('toggleDarkMode');
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Font size controls
+        const increaseFont = document.getElementById('increaseFont');
+        const decreaseFont = document.getElementById('decreaseFont');
+        let fontSize = 1.0;
+        increaseFont.onclick = () => {
+            fontSize = Math.min(fontSize + 0.1, 2.0);
+            document.body.style.fontSize = fontSize + 'em';
+        };
+        decreaseFont.onclick = () => {
+            fontSize = Math.max(fontSize - 0.1, 0.7);
+            document.body.style.fontSize = fontSize + 'em';
+        };
+
+        // Quick reply buttons
+        document.querySelectorAll('.quick-reply-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('userInput').value = btn.textContent;
+                document.getElementById('sendMessage').click();
+            });
+        });
+
+        // File upload button logic
+        const uploadFileBtn = document.getElementById('uploadFileBtn');
+        const fileUpload = document.getElementById('fileUpload');
+        uploadFileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileUpload.click();
+        });
+        fileUpload.addEventListener('change', () => {
+            if (fileUpload.files.length > 0) {
+                const fileName = fileUpload.files[0].name;
+                document.getElementById('userInput').value = `Uploaded file: ${fileName}`;
+            }
+        });
+    </script>
 </body>
 </html> 

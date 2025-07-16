@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearButton = document.getElementById('clearChat');
     const escalateButton = document.getElementById('escalateToHuman');
     let isTyping = false;
+    let isFirstMessage = true;
 
     // Handle sending messages
     const sendMessage = async () => {
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message }),
+                body: JSON.stringify({ message, is_first: isFirstMessage }),
             });
 
             const data = await response.json();
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (response.ok) {
                 appendMessage('bot', data.response);
+                isFirstMessage = false;
             } else {
                 appendMessage('error', data.error || 'Something went wrong. Please try again.');
             }
@@ -119,8 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearButton.addEventListener('click', () => {
         chatMessages.innerHTML = '';
-        // Add welcome message back
-        appendMessage('bot', 'Hello! I\'m TaxAssist, your property tax expert from Cotality. How can I help you today?');
+        // No welcome message here; let backend handle greeting on first user message
+        isFirstMessage = true;
     });
 
     escalateButton.addEventListener('click', () => {
@@ -132,4 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput.style.height = 'auto';
         userInput.style.height = Math.min(userInput.scrollHeight, 150) + 'px';
     });
+
+    // No welcome message on page load; let backend handle greeting on first user message
 }); 

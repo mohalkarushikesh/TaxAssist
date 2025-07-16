@@ -45,7 +45,7 @@ pip install -r requirements.txt
 4. Set up environment variables:
 Create a `.env` file in the root directory with:
 ```
-GEMINI_API_KEY=AIzaSyCDGdoZrW4V10rnTCCGRu6vWNs-AddIsfY
+GEMINI_API_KEY=your_gemini_api_key
 FLASK_ENV=development
 DEBUG=True
 ```

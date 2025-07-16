@@ -3,6 +3,10 @@ from flask_cors import CORS
 import os
 from datetime import datetime
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__, 
@@ -12,7 +16,9 @@ app = Flask(__name__,
 CORS(app)
 
 # Configure Gemini API
-GEMINI_API_KEY = "AIzaSyCDGdoZrW4V10rnTCCGRu6vWNs-AddIsfY"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY not found in .env file")
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.0-flash')
 
@@ -94,4 +100,4 @@ def health_check():
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     debug = os.getenv("DEBUG", "true").lower() == "true"
-    app.run(host="0.0.0.0", port=port, debug=debug) 
+    app.run(host="0.0.0.0", port=port, debug=debug)

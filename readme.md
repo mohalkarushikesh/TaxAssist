@@ -112,11 +112,8 @@ Below are screenshots of the TaxAssist application UI:
 ### Chatbot UI (Light Mode)
 ![Chatbot UI 1](static/images/Updated%20Chatbot%20UI1.png)
 
-### Chatbot UI (Dark Mode)
+### Chatbot UI (Light Mode)
 ![Chatbot UI 2](static/images/Updated%20Chatbot%20UI2.png)
-
-### Chatbot UI (Dark Mode)
-![Chatbot UI 2](static/images/Updated%20Chatbot%20UI3.png)
 
 ---
 

@@ -1,6 +1,6 @@
-# TaxAssist - Cotality Property Tax Chatbot
+# Taxly, your AI-powered Tax Assistant - Taxly Property Tax Chatbot
 
-TaxAssist is an intelligent chatbot designed to handle property-related tax queries for Cotality.com. It uses the Gemini API to provide accurate, timely, and user-friendly responses about property taxes, calculations, regulations, and guidance.
+Taxly, your AI-powered Tax Assistant is an intelligent chatbot designed to handle property-related tax queries for Taxly.com. It uses the Gemini API to provide accurate, timely, and user-friendly responses about property taxes, calculations, regulations, and guidance.
 
 ## Features
 
@@ -67,7 +67,7 @@ The application will be available at `http://localhost:5000`
 2. Register a new account or log in
 3. Access the chatbot via the "Get Started" or "Login" button
 4. Type your property tax-related question in the chat input
-5. Receive instant, formatted responses from TaxAssist
+5. Receive instant, formatted responses from Taxly, your AI-powered Tax Assistant
 6. Use the "Clear Chat" button to start a new conversation
 7. Click the headset icon to escalate to human support if needed
 
@@ -86,12 +86,12 @@ The application will be available at `http://localhost:5000`
 ## Support
 
 For support inquiries, contact:
-- Email: supportUK@cotality.com
+- Email: supportUK@taxly.com
 - Phone (UK): 0333 123 1417
 
 ## License
 
-Copyright © 2024 Cotality.com. All rights reserved.
+Copyright © 2024 Taxly.com. All rights reserved.
 
 ## Application Screenshots
 

@@ -14,8 +14,8 @@ if not GEMINI_API_KEY:
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.0-flash')
 
-# System prompt for TaxAssist
-SYSTEM_PROMPT = """You are TaxAssist, Cotality.com's expert property tax chatbot. \
+# System prompt for Taxly, your AI-powered Tax Assistant
+SYSTEM_PROMPT = """You are Taxly, your AI-powered Tax Assistant, Taxly.com's expert property tax chatbot. \
 You provide accurate, friendly, and concise responses about property taxes. \
 Focus on property tax calculations, regulations, and guidance.\
 Always maintain a professional yet approachable tone.\
@@ -27,7 +27,7 @@ Your capabilities include:\
 4. Tax compliance checks and deadlines\
 5. Updates on tax-related news and legislative changes\
 \
-When providing estimates, use typical property tax rates and indicate they are based on Cotality's insights."""
+When providing estimates, use typical property tax rates and indicate they are based on Taxly's insights."""
 
 def starts_with_greeting(text):
     greetings = [
@@ -58,7 +58,7 @@ def chat():
 
         if any(trigger in user_message for trigger in capabilities_triggers):
             formatted_response = (
-                "<b>Here are my capabilities as TaxAssist:</b><br><br>"
+                "<b>Here are my capabilities as Taxly, your AI-powered Tax Assistant:</b><br><br>"
                 "<ul>"
                 "<li>Calculating property tax estimates</li>"
                 "<li>Explaining tax laws and regulations</li>"
@@ -81,7 +81,7 @@ def chat():
                     )
                 else:
                     formatted_response = (
-                        "<b>Hello! I'm TaxAssist, your property tax expert from Cotality.com. How can I help you today?</b><br><br>"
+                        "<b>Hello! I'm Taxly, your AI-powered Tax Assistant from Taxly.com. How can I help you today?</b><br><br>"
                         f"{llm_html}<br><br>"
                         "Just let me know how I can assist you further!"
                     )
@@ -113,7 +113,7 @@ def tax_estimate():
         response = model.generate_content(prompt)
         llm_html = markdown2.markdown(response.text.strip())
         formatted_response = (
-            "<b>Hello! I'm TaxAssist from Cotality.com. Here's your property tax estimate:</b><br><br>"
+            "<b>Hello! I'm Taxly, your AI-powered Tax Assistant from Taxly.com. Here's your property tax estimate:</b><br><br>"
             f"{llm_html}<br><br>"
             "Need a detailed breakdown or help with filing? Let me know!"
         )

@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     escalateButton.addEventListener('click', () => {
-        window.location.href = 'mailto:supportUK@cotality.com?subject=TaxAssist%20Escalation';
+        window.location.href = 'mailto:supportUK@taxly.com?subject=TaxAssist%20Escalation';
     });
 
     // Auto-resize textarea
